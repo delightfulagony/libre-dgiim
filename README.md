@@ -6,7 +6,7 @@ relacionados con nuestros estudios.
 
 También nos ayuda a mantener nuestros apuntes organizados!
 
-#¿Cómo puedo contribuir?
+## ¿Cómo puedo contribuir?
 Hemos hecho una pequeña guía sobre como pueden hacerse contribuciones al 
 repositorio (Ver [CONTRIBUTING](CONTRIBUTING.md))
 
