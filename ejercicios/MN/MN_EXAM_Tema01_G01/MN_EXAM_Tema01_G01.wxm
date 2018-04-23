@@ -1,0 +1,93 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 18.02.0 ] */
+/* [wxMaxima: comment start ]
+1. Realize la norma 1 de la matriz A
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: matrix(
+ [1,-sqrt(2),sqrt(2)], 
+ [3.5,-2.1,-5], 
+ [-sqrt(6),-4.1,-9]
+);
+
+n:matrix_size(A)[1];
+
+P:makelist(0,i,1,n);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for j:1 thru n do(
+    for i:1 thru n do(
+        P[j]:P[j]+abs(A[i][j])
+    )
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lmax(P);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+killall;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+2. Realize la factorización tipo Doolittle de la matriz B
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+B:matrix(
+ [1,2,3,4], 
+ [4,3,2,1], 
+ [1,0,1,0], 
+ [0,2,0,2]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+determinant(B);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+No puede hacerse la factorización ya que la matriz no es regular, aún así
+el procedimiento sería el siguiente:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+g:lu_factor(B);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sol:get_lu_factors(g);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sol[2];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sol[3];
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$
