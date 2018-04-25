@@ -1,8 +1,8 @@
 # libre-dgiim
 FOSS and Libre-Knowledge from my studies, feel free to participate!
 ## ¿Por qué nace este repositorio?
-Sentimos la necesidad de liberar muchos apuntes y ejercicios 
-relacionados con nuestros estudios.
+Queríamos liberar muchos apuntes y ejercicios relacionados con nuestros 
+estudios y que estuvieran al alcance de todo el mundo.
 
 También nos ayuda a mantener nuestros apuntes organizados!
 
