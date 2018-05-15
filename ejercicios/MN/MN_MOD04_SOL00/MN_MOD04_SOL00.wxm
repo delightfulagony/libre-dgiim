@@ -1,0 +1,207 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 18.02.0 ] */
+/* [wxMaxima: title   start ]
+Ejercicio 1
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Programa la forma de Lagrange del polinomio p de grado menor o igual que N que resuelve el problema de interpolación polinómica: dados (x1,y1),...,(xN,yN) (abscisas distintas dos a dos), se tiene que j=0,1,...,N ⇒ p(xj)=yj. Para ello, calcula previamente los polinomios de Lagrange. Aplícalo al problema: encuentra el polinomio p de grado menor o igual que 8 de forma que p(j/8)=sen(j/8)-j/4, (j=0,1,...,8). Dibuja simultáneamente las gráficas de p y de f(x)=senx-2x en el intervalo [0,1].
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Datos del ejercicio*/
+n:8;
+
+dat_x:makelist((j/8)-(j/4),j,0,n);
+
+f(x):=(sin(x)-2*x);
+
+dat_y:makelist(f(dat_x[i]),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Definimos la función l*/
+l(i,x):=product((x-x[j])/(x[i]-x[j]),j,1,i-1)*product((x-x[j])/(x[i]-x[j]),j,i+1,n+1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Definimos la función p_L*/
+p_L(x):=sum(y[i]*l(i,x),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([p_L(x)], [x,0,1])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 2
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Programa la forma de Newton del polinomio p que resuelve el problema de interpolación polinómica anterior. Para ello, calcula previamente los polinomios nodales y las diferencias divididas. Aplícalo a los mismos datos del ejercicio anterior y comprueba que el resultado que obtienes es el mismo.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Datos del ejercicio*/
+n:8;
+
+dat_x:makelist((j/8)-(j/4),j,0,n);
+
+f(x):=(sin(x)-2*x);
+
+dat_y:makelist(f(dat_x[i]),i,1,n+1);
+
+Y:diagmatrix(n+1,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Inicializamos la matriz Y*/
+for i:1 thru n+1 do(
+    Y[i][1]:dat_y[i]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Completamos la matriz*/
+for j:2 thru n+1 do(
+    for i:j thru n+1 do(
+        Y[i][j]:(Y[i][j-1]-Y[i-1][j-1])/(dat_x[i]-dat_x[1+(i-j)])
+    )
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Definimos la función w*/
+w(i,x):=if i=1 then 1 else(product((x-x[j]),j,1,i-1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Definimos la función p_N*/
+p_N(x):=sum((Y[i][i]*w(i,x)),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 3
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Sea f la función en C[-1,1] definida como f(x)=7.21 cos(2x/π). Considera los nodos xj=1-2j/21, j=0,1,...,21, los datos (xj,f(xj)) y los datos perturbados (xj,fj), siendo
+fj=f(xj)+10^(-3) (-1)^j.
+- Halla max{|f(xj)-fj|: j=0,...,21}.
+- Estima gráficamente la distancia (norma ∞) de los interpolantes obtenidos para las dos series de datos. ¿Qué se puede decir del condicionamiento del problema de
+interpolación anterior?
+- Da una estimación de la constante de Lebesgue L y relaciona el valor de este número con el apartado anterior.
+- Determina los 22 nodos de Chebyshev en el intervalo [-1,1] y resuelve el problema de interpolación para esos nodos y la misma función f. Analiza el condicionamiento
+de este nuevo problema.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 4
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Resuelve el problema de interpolación de Hermite: encuentra el polinomio p de grado menor o igual que 9 de forma que p(j)=log j, p’(j)=j/2.36, j=1,2,3,4,5.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 5
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Calcula la solución del problema de interpolación de Taylor: determina el polinomio p de grado menor o igual que 5 tal que la derivada de orden j en 1.47 coincide con la integral entre 0 y 1 de la función x^j, para j=0,1,2,3,4,5.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 6
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Considera un intervalo real cualquiera [a,b], con a<b, y una partición suya P={x0,x1,...,xN}. 
+- Halla una base del espacio E de funciones splines continuas y afines a trozos. 
+- Utiliza la base anterior para encontrar el único elemento s de dicho espacio E de forma que s(xj)=αj, (j=0,1,...,N), siendo αj's escalares dados.
+- Aplica lo anterior a la partición P={x0=0.4, x1=0.5, x2=2.34, x3=3.45, x4=4.567, x5=5.081,x6=5.26} del intervalo [0.4,5.26] para encontrar el único elemento s de E de forma que s(xj)=1-xj^2/20.78, (j=0,1,...,6). Dibuja conjuntamente las gráficas de s y de f(x)=1-x^2/20.78.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Ejercicio 7
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Partiendo de una partición uniforme P={x0,x1,...,xN} de un intervalo real cualquiera [a,b].
+- Halla el único spline natural s de clase 2 y grado 3 de forma que s(xj)=αj, (j=0,1,...,N), siendo αj's escalares dados.
+- Aplica lo anterior a la partición P del intervalo [-2.09,4,56] en 8 subintervalos iguales y con s(xj)= log √(1 + |xj|), (j=0,1,...,8).
+- Dibuja conjuntamente las gráficas de s y de f(x)=log √(1 + |x|).
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n:8;
+
+a:-2.09;
+b:4.56;
+
+h:(b-a)/n;
+
+x:makelist(a+i*h,i,0,n);
+c:diagmatrix(n,2);
+
+for i:1 thru n-1 do (
+    c[i][i+1]:1/2,
+    c[i+1][i]:1/2
+);
+
+y:makelist(log(sqrt(1+abs(x[i]))),i,1,n+1);
+v:makelist(0,i,0,n-1);
+
+for i:1 thru n-2 do(
+    v[i+1]:(3/(h*h*h))*(y[i+2]-2*y[i+1]+y[i])
+);
+
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$
