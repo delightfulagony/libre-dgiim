@@ -1,0 +1,88 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.2 ] */
+
+/* [wxMaxima: title   start ]
+Ejercicio 7:
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: comment start ]
+Partiendo de una partición uniforme P={x0,x1,...,xN} de in intervalo real cualquiera [a,b],
+1- Halla el único spline natural s de clase 2 y grado 3 de forma que s(xj)=αj, (j=0,1,...,N), siendo αj's escalares dados,
+2- Aplica lo anterior a la partición P del intervalo [-2.09,4,56] en 8 subintervalos iguales y con s(xj)= log √(1 + |xj|), (j=0,1,...,8) y
+3- Dibuja conjuntamente las gráficas de s y de f(x)=log √(1 + |x|).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Datos iniciales:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x):=log(sqrt(1+abs(x)));
+n:8;
+h:6.65/8; /*Para que salga exacto porque máxima no sabe sumar*/
+nx:makelist(-2.09+i*h,i,0,n);
+ny:makelist(f(nx[i]),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sistema de ecuaciones: (Ac=b)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+A:diagmatrix(n+1,2);
+for i:2 thru n do(
+    A[i][i-1]:1/2,
+    A[i][i+1]:1/2
+);
+
+b:makelist(0,i,0,n);
+for i:2 thru n do(
+    b[i]:(ny[i+1]-2*ny[i]+ny[i-1])*(3/h^2)
+);
+
+c:makelist(0,i,0,n);
+for i:1 thru n+1 do(
+    suma:0,
+    for j:1 thru n+1 do(
+        suma:suma+invert(A)[i][j]*b[j]
+    ),
+    c[i]:suma
+);
+c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Alfas y betas:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha:makelist((ny[i+1]-ny[i])/h-(h/6)*(c[i+1]-c[i]),i,1,n);
+beta:makelist(ny[i]-c[i]*(h^2/6),i,1,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de los splines:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+s(i,t):=if t<nx[i] then
+    0
+else if t<nx[i+1] then
+    c[i]*((nx[i+1]-t)^3/(6*h))+c[i+1]*((t-nx[i])^3/(6*h))+alpha[i]*(t-nx[i])+beta[i]
+else
+    0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p(x):=if x>nx[n+1] then
+    0
+else
+    sum(s(i,x),i,1,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([p(x),f(x)], [x,-2.09,4.56])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
