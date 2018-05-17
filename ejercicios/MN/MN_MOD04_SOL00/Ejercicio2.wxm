@@ -1,0 +1,55 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.2 ] */
+
+/* [wxMaxima: title   start ]
+Ejercicio 2:
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: comment start ]
+Programa la forma de Newton del polinomio p que resuelve el problema de interpolación polinómica anterior. Para ello, calcula previamente los polinomios nodales y
+las diferencias divididas. Aplícalo a los mismos datos del ejercicio anterior y comprueba que el resultado que obtienes es el mismo.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Datos iniciales:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x):=sin(x)-2*x;
+n:8;
+datos_x:makelist(i/8,i,0,n);
+datos_y:makelist(f(datos_x[i]),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de las diferencias divididas:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+dd: genmatrix(lambda([i,j], 0), n+1, n+1);
+for i:1 thru n+1 do( /*Primera columna*/
+    dd[i][1]:datos_y[i]
+);
+for j:2 thru n+1 do(
+    for i:j thru n+1 do(
+        dd[i][j]:(dd[i][j-1]-dd[i-1][j-1])/(datos_x[i]-datos_x[1+(i-j)])
+    )
+);
+dd;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de las omegas y el polinomio de newton:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+w(i,t):=if i=1 then 1 else product((t-datos_x[j]),j,1,i-1);
+p(x):=sum(dd[i][i]*w(i,x),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f(x),p(x)], [x,0,1]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

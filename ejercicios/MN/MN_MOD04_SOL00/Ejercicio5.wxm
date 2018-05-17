@@ -1,0 +1,45 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.2 ] */
+
+/* [wxMaxima: title   start ]
+Ejercicio 5:
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: comment start ]
+5.- Calcula la solución del problema de interpolación de Taylor: determina el polinomio p de grado menor o igual que 5 tal que la derivada de orden j en 1.47 coincide con
+la integral entre 0 y 1 de la función x^j, para j=0,1,2,3,4,5.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de las "d" y "t":
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+n:5;
+x_O:1.47;
+nx:makelist(j,j,0,5);
+f(j):=integrate(u^j,u,0,1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d:makelist(f(nx[i]),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t(i,v):=(v-x_O)^i/i!;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Polinomio que cumple las características:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+p(x):=sum(d[i+1]*t(i,x),i,0,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p(y);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

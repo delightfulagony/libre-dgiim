@@ -1,0 +1,48 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.2 ] */
+
+/* [wxMaxima: title   start ]
+Ejercicio 1:
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: comment start ]
+1.- Programa la forma de Lagrange del polinomio p de grado menor o igual que N que resuelve el problema de interpolación polinómica: dados (x1,y1),...,(xN,yN) (abscisas distintas dos a dos), se tiene que j=0,1,...,N ⇒ p(xj)=yj. Para ello, calcula previamente los polinomios de Lagrange. Aplícalo al problema: encuentra el polinomio p de grado menor o igual que 8 de forma que p(j/8)=sen(j/8)-j/4, (j=0,1,...,8). Dibuja simultáneamente las gráficas de p y de f(x)=senx-2x en el intervalo [0,1].
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de los nodos:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x):=sin(x)-2*x;
+n:8;
+datos_x:makelist(i/8,i,0,n);
+datos_y:makelist(sin(j/8)-j/4,j,0,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación de los polinomios de Lagrange:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+l(i,t):=product((t-datos_x[j])/(datos_x [i]-datos_x[j]),j,1,i-1)*product((t-datos_x[j])/(datos_x [i]-datos_x[j]),j,i+1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Determinación del polinomio de interpolación:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+p(x):=sum(datos_y[i]*l(i,x),i,1,n+1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Expresión de las gráficas de la función original y la de interpolación:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([p(x),f(x)], [x,0,1]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
