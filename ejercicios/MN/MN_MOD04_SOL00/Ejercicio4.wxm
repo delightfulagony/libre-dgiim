@@ -1,21 +1,24 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 16.12.2 ] */
-
+/* [ Created with wxMaxima version 18.02.0 ] */
 /* [wxMaxima: title   start ]
 Ejercicio 4:
    [wxMaxima: title   end   ] */
+
 
 /* [wxMaxima: comment start ]
 Resuelve el problema de interpolación de Hermite: encuentra el polinomio p de grado menor o igual que 9 de forma que p(j)=log j, p’(j)=j/2.36, j=1,2,3,4,5.
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: section start ]
 Caso de Hermite
    [wxMaxima: section end   ] */
 
+
 /* [wxMaxima: comment start ]
 Determinamos los nodos:
    [wxMaxima: comment end   ] */
+
 
 /* [wxMaxima: input   start ] */
 f(x):=log(x);
@@ -25,33 +28,42 @@ ny:makelist(f(nx[i]),i,1,5);
 nd:makelist(nx[i]/2.36,i,1,5);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 n:length(nx);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: comment start ]
 Base de polinomios de Lagrange y determinación del polinomio de Hermite:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
 l(i,t):=product((t-nx[j])/(nx[i]-nx[j]),j,1,i-1)*product((t-nx[j])/(nx[i]-nx[j]),j,i+1,n);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 h(x):=sum((ny[i]*(1-2*(x-nx[i])*diff(l(i,x),x))*(l(i,x))^2)+(nd[i]*(x-nx[i])*(l(i,x))^2),i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: comment start ]
 Gráfica del polinomio y de su derivada:
    [wxMaxima: comment end   ] */
 
-/* [wxMaxima: input   start ] */
-wxplot2d([f(x),h(x)], [x,1,5])$
-/* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-wxplot2d([d(x),diff(h(x),x)], [x,1,5])$
+plot2d([f(x),h(x)], [x,1,5])$
 /* [wxMaxima: input   end   ] */
 
-/* Maxima can't load/batch files which end with a comment! */
-"Created with wxMaxima"$
+
+/* [wxMaxima: input   start ] */
+plot2d([d(x),diff(h(x),x)], [x,1,5])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$

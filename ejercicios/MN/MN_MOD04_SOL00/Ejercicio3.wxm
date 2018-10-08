@@ -1,9 +1,9 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 16.12.2 ] */
-
+/* [ Created with wxMaxima version 18.02.0 ] */
 /* [wxMaxima: title   start ]
 Ejercicio 3:
    [wxMaxima: title   end   ] */
+
 
 /* [wxMaxima: comment start ]
 3.- Sea f la función en C[-1,1] definida como f(x)=7.21 cos(2x/π). Considera los nodos xj=1-2j/21, j=0,1,...,21, los datos (xj,f(xj)) y los datos perturbados (xj,fj), siendo
@@ -16,9 +16,11 @@ interpolación anterior?
 de este nuevo problema.
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: comment start ]
 Determinación de nodos y de datos perturbados:
    [wxMaxima: comment end   ] */
+
 
 /* [wxMaxima: input   start ] */
 n:22;
@@ -28,100 +30,125 @@ nod_y:makelist(f(nod_x[i]),i,1,n);
 pert_y:makelist(f(nod_x[i])+10^(-3)*(-1)^i,i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: section start ]
 Hallamos max{|f(xj)-fj|: j=0,...,21}.
    [wxMaxima: section end   ] */
+
 
 /* [wxMaxima: input   start ] */
 aux_1:makelist(abs(nod_y[i]-pert_y[i]),i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 lmax(aux_1);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: section start ]
 Estima gráficamente la distancia (norma ∞) de los interpolantes obtenidos para las dos series de datos.
    [wxMaxima: section end   ] */
 
+
 /* [wxMaxima: comment start ]
 Calculamos los interpolantes:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
 l(i,t):=product((t-nod_x[j])/(nod_x[i]-nod_x[j]),j,1,i-1)*product((t-nod_x[j])/(nod_x[i]-nod_x[j]),j,i+1,n);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 p_n(x):=sum(nod_y[i]*l(i,x),i,1,n);
 p_p(x):=sum(pert_y[i]*l(i,x),i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: comment start ]
 Realizamos las gráfica de la distancia:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
-wxplot2d([abs(p_n(x)-p_p(x))], [x,-1,1])$
+plot2d([abs(p_n(x)-p_p(x))], [x,-1,1])$
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: section start ]
 Da una estimación de la constante de Lebesgue L y relaciona el valor de este número con el apartado anterior. Da una estimación de la constante de Lebesgue L y relaciona el valor de este número con el apartado anterior
    [wxMaxima: section end   ] */
 
+
 /* [wxMaxima: input   start ] */
 landa(t):=sum(abs(l(i,t)),i,1,n);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: comment start ]
 Calculamos aproximadamente la constante:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
-wxplot2d([landa(t)], [t,-1,1]);
+plot2d([landa(t)], [t,-1,1]);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: comment start ]
 Hacemos zoom en el máximo:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
-wxplot2d([landa(t)],[t,-0.977,-0.976]);
+plot2d([landa(t)],[t,-0.977,-0.976]);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: section start ]
 Determina los 22 nodos de Chebyshev en el intervalo [-1,1] y resuelve el problema de interpolación para esos nodos y la misma función f. Analiza el condicionamiento de este nuevo problema.
    [wxMaxima: section end   ] */
 
+
 /* [wxMaxima: input   start ] */
 cheb_x:makelist(cos((2*i+1)/(2*n)*%pi),i,0,n-1);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 cheb_y:makelist(f(cheb_x[i]),i,1,n);
 cheb_y_p:makelist(f(cheb_x[i])+10^(-3)*(-1)^i,i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: comment start ]
 Calculamos el polinomio de Lagrange con los nuevos datos:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
 l_cheb(i,t):=product((t-cheb_x[j])/(cheb_x[i]-cheb_x[j]),j,1,i-1)*product((t-cheb_x[j])/(cheb_x[i]-cheb_x[j]),j,i+1,n);
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 lagr_n(x):=sum(cheb_y[i]*l_cheb(i,x),i,1,n);
 lagr_p(x):=sum(cheb_y_p[i]*l_cheb(i,x),i,1,n);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: comment start ]
 Veamos la distancia con los nuevos nodos:
    [wxMaxima: comment end   ] */
 
+
 /* [wxMaxima: input   start ] */
-wxplot2d([abs(lagr_p(x)-lagr_n(x))], [x,-1,1]);
+plot2d([abs(lagr_p(x)-lagr_n(x))], [x,-1,1]);
 /* [wxMaxima: input   end   ] */
 
-/* Maxima can't load/batch files which end with a comment! */
-"Created with wxMaxima"$
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$
